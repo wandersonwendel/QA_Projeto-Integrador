@@ -61,6 +61,34 @@ class CartaoModel:
             cursor.close()
             conn.close()
 
+    def desvincular_cartao(self, passageiro_id, titular, numero):
+        """ Método responsável por desvincular o cartão no banco de dados """
+        conn = self.conectar_banco()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("DELETE FROM cartoes (passageiro_id, titular, numero) VALUES (%s, %s, %s)",
+            (passageiro_id, titular, numero))
+            conn.commit()
+            return True
+        except psycopg2.IntegrityError as integrity_error:
+            # Lidar com violação de integridade (por exemplo, chave única)
+            print(f"Erro de integridade ao desvincular cartão: {integrity_error}")
+            return False
+
+        except psycopg2.DataError as data_error:
+            # Lidar com erros de dados (por exemplo, tipo de dados incorreto)
+            print(f"Erro de dados ao desvincular cartão: {data_error}")
+            return False
+
+        except psycopg2.DatabaseError as db_error:
+            # Lidar com outros erros relacionados ao banco de dados
+            print(f"Erro de banco de dados ao desvincular cartão: {db_error}")
+            return False
+        finally:
+            cursor.close()
+            conn.close()
+
     def enviar_resposta_para_passageiro(self, passageiro_id, mensagem):
         """ Método responsável por dar o retorno da requisição do cliente """
         try:
