@@ -124,7 +124,6 @@ class PassageiroModel:
             cursor.execute("INSERT INTO passageiros (nome, email, telefone, senha, endereco, genero) VALUES (%s, %s, %s, %s, %s, %s)",
                            (nome, email, telefone, senha, endereco, genero))
             conn.commit()
-            print(f"Passageiro {nome} cadastrado com sucesso!")
         except psycopg2.IntegrityError as integrity_error:
             # Lidar com violação de integridade (por exemplo, chave única)
             print(f"Erro de integridade ao cadastrar dados do passageiro: {integrity_error}")
@@ -185,7 +184,6 @@ class MototaxiModel:
             cursor.execute("INSERT INTO mototaxis (nome, email, telefone, genero, senha, crlv, cnh, disponibilidade, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                            (nome, email, telefone, genero, senha, crlv, cnh, disponibilidade, latitude, longitude))
             conn.commit()
-            print(f"Mototaxi {nome} cadastrado com sucesso!")
         except psycopg2.IntegrityError as integrity_error:
             # Lidar com violação de integridade (por exemplo, chave única)
             print(f"Erro de integridade ao cadastrar dados do mototaxi: {integrity_error}")

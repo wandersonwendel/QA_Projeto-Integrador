@@ -40,14 +40,12 @@ mototaxi_controller = MototaxiController(mototaxi_model, mototaxi_view)
 usuario_controller = UsuarioController(usuario_model, usuario_view)
 
 # Testar algumas funcionalidades
-veiculo_controller.cadastrar_veiculo('abc123', 'preto', 'Fiesta', 2022, 'ABC1234', '000000')
+veiculo_controller.cadastrar_veiculo('abc099', 'preto', 'Fiesta', 2022, 'ABC1234', '000000')
 
-passageiro_controller.cadastrar_passageiro('wan', 'wand@gmail.com', '93829472', 'jsfdsfg', 'masc', 'dhsjffg')
+passageiro_controller.cadastrar_passageiro('wan', 'wandd@gmail.com', '93829472', 'jsfdsfg', 'masc', 'dhsjffg')
 
-mototaxi_controller.cadastrar_mototaxi('wan', 'wand@gmail.com', '93829472', 'masc', '48385685', '4748566', '921382', True, 5.6487, 10.3535)
+mototaxi_controller.cadastrar_mototaxi('wan', 'wandd@gmail.com', '93829472', 'masc', '48385685', '4748566', '921382', True, 5.6487, 10.3535)
 
 usuario_controller.realizar_login('wand@gmail.com', 'jsfdsfg')
 
 cartao_controller.cadastrar_cartao(1, 'Wan W S Lopes', '321', '2030', 'débito', '927497233')
-
-usuario_controller.realizar_logout()
