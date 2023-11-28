@@ -41,6 +41,15 @@ class CartaoController:
             self.view.mostrar_mensagem("Erro ao cadastrar o cartão.")
             self.model.enviar_resposta_para_passageiro(passageiro_id, "RESPOSTA_CADASTRO_CARTAO; ERRO")
 
+    def desvincular_cartao(self, passageiro_id, titular, numero):
+        """ Método responsável por desvincular o cartão no banco de dados """
+        if self.model.desvincular_cartao(passageiro_id, titular,numero):
+            self.view.mostrar_mensagem("Cartão desvinculado com sucesso!")
+            self.model.enviar_resposta_para_passageiro(passageiro_id, "RESPOSTA_DESVINCULAR_CARTAO; SUCESSO")
+        else:
+            self.view.mostrar_mensagem("Erro ao desvincular o cartão.")
+            self.model.enviar_resposta_para_passageiro(passageiro_id, "RESPOSTA_DESVINCULAR_CARTAO; ERRO")
+
 class PassageiroController:
     """ Método responsável pelo controle do cliente """
     def __init__(self, model, view):
@@ -97,3 +106,15 @@ class UsuarioController:
             self.view.mostrar_mensagem("Logout bem-sucedido!")
         else:
             self.view.mostrar_mensagem("Falha ao fazer logout.")
+
+    def excluir_conta(self, email, senha):
+        """ Método responsável pela exclusão de conta do usuário """
+        if self.model.verificar_credenciais(email, senha):  # Assumindo que há um método para verificar as credenciais
+            confirmacao = input("Tem certeza de que deseja excluir sua conta? (Digite 'sim' para confirmar): ")
+            if confirmacao.lower() == 'sim':
+                self.model.excluir_conta(email)  # Assumindo que há um método para excluir a conta no modelo
+                self.view.mostrar_mensagem("Sua conta foi excluída com sucesso.")
+            else:
+                self.view.mostrar_mensagem("Exclusão de conta cancelada.")
+        else:
+            self.view.mostrar_mensagem("Credenciais inválidas. Não é possível excluir a conta.")

@@ -67,8 +67,7 @@ class CartaoModel:
         cursor = conn.cursor()
 
         try:
-            cursor.execute("DELETE FROM cartoes (passageiro_id, titular, numero) VALUES (%s, %s, %s)",
-            (passageiro_id, titular, numero))
+            cursor.execute("DELETE FROM cartoes WHERE passageiro_id=%s AND titular=%s AND numero=%s", (passageiro_id, titular, numero))
             conn.commit()
             return True
         except psycopg2.IntegrityError as integrity_error:
@@ -177,7 +176,7 @@ class MototaxiModel:
         """ Responsável por conectar com o banco de dados """
         return psycopg2.connect(**self.database_config)
     
-    def cadastrar_Mototaxi(self, nome, email, telefone, genero, senha, crlv, cnh, disponibilidade, latitude, longitude):
+    def cadastrar_mototaxi(self, nome, email, telefone, genero, senha, crlv, cnh, disponibilidade, latitude, longitude):
         """ Método responsável por cadastrar os dados do cliente """
         conn = self.conectar_banco()
         cursor = conn.cursor()
