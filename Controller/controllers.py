@@ -64,7 +64,7 @@ class PassageiroController:
 
     def atualizar_passageiro(self, passageiro_id, novo_nome, novo_telefone):
         """ Médodo responsável por atualizar os dados do cliente """
-        self.model.atualizar_cliente(passageiro_id, novo_nome, novo_telefone)
+        self.model.atualizar_passageiro(passageiro_id, novo_nome, novo_telefone)
         mensagem = f'Dados do Cliente {passageiro_id} atualizados com sucesso.'
         self.view.mostrar_mensagem(mensagem)
 
@@ -77,13 +77,13 @@ class MototaxiController:
 
     def cadastrar_mototaxi(self, nome, email, telefone, genero, senha, crlv, cnh, disponibilidade, latitude, longitude):
          """ Médodo responsável por cadastrar os dados do mototaxi """
-         self.model.cadastrar_passageiro(nome, email, telefone, genero, senha, crlv, cnh, disponibilidade, latitude, longitude)
+         self.model.cadastrar_mototaxi(nome, email, telefone, genero, senha, crlv, cnh, disponibilidade, latitude, longitude)
          mensagem = f'Mototaxi {nome} cadastrado com sucesso.'
          self.view.mostrar_mensagem(mensagem)
 
     def atualizar_mototaxi(self, mototaxi_id, novo_nome, novo_telefone):
         """ Método responsável por atualizar os dados do mototaxi """
-        self.model.atualizar_entregador(mototaxi_id, novo_nome, novo_telefone)
+        self.model.atualizar_mototaxi(mototaxi_id, novo_nome, novo_telefone)
         mensagem = f'Dados do mototaxi {mototaxi_id} atualizados com sucesso.'
         self.view.mostrar_mensagem(mensagem)
 

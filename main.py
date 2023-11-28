@@ -1,10 +1,8 @@
 import pika
-from Model import VeiculoModel, CartaoModel, PassageiroModel, MototaxiModel, UsuarioModel
-from View import PassageiroView, CartaoView, MototaxiView, UsuarioView
-from Controller import VeiculoController, CartaoController, \
+from Model.models import VeiculoModel, CartaoModel, PassageiroModel, MototaxiModel, UsuarioModel
+from View.views import PassageiroView, CartaoView, MototaxiView, UsuarioView
+from Controller.controllers import VeiculoController, CartaoController, \
     PassageiroController,MototaxiController, UsuarioController
-
-
 
 # Configurações do banco de dados
 database_config = {
@@ -42,14 +40,14 @@ mototaxi_controller = MototaxiController(mototaxi_model, mototaxi_view)
 usuario_controller = UsuarioController(usuario_model, usuario_view)
 
 # Testar algumas funcionalidades
-veiculo_controller.cadastrar_veiculo('Carro', 'Ford', 'Fiesta', 2022, 'ABC1234')
+veiculo_controller.cadastrar_veiculo('abc123', 'preto', 'Fiesta', 2022, 'ABC1234', '000000')
 
-passageiro_controller.atualizar_passageiro(1, 'mauricio', '8599999999')
+passageiro_controller.cadastrar_passageiro('wan', 'wand@gmail.com', '93829472', 'jsfdsfg', 'masc', 'dhsjffg')
 
-mototaxi_controller.atualizar_mototaxi(1, 'poo Nelson', '999999999')
+mototaxi_controller.cadastrar_mototaxi('wan', 'wand@gmail.com', '93829472', 'masc', '48385685', '4748566', '921382', True, 5.6487, 10.3535)
 
-usuario_controller.realizar_login('123456789', 'senha123')
+usuario_controller.realizar_login('wand@gmail.com', 'jsfdsfg')
 
-cartao_controller.cadastrar_cartao(1, 'Débito', '987654321')
+cartao_controller.cadastrar_cartao(1, 'Wan W S Lopes', '321', '2030', 'débito', '927497233')
 
 usuario_controller.realizar_logout()
