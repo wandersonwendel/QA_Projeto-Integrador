@@ -5,27 +5,37 @@ import pika
 
 
 class VeiculoModel:
-    """ Classe referente ao modelo veículo """
-    def __init__(self, database_config):
+    def _init_(self, database_config, rabbitmq_config):
         self.database_config = database_config
+        self.rabbitmq_config = rabbitmq_config
 
     def cadastrar_veiculo(self, placa, cor, modelo, ano, renavam, chassi):
-        """ Método responsável por inserir o veículo no banco de dados """
         try:
             with psycopg2.connect(**self.database_config) as conn:
                 cursor = conn.cursor()
-                cursor.execute("INSERT INTO veiculos (placa, cor, modelo, ano, renavam, chassi) "
-                                "VALUES (%s, %s, %s, %s, %s, %s)",
+                cursor.execute("INSERT INTO veiculos (placa, cor, modelo, ano, renavam, chassi) VALUES (%s, %s, %s, %s, %s, %s)",
                                (placa, cor, modelo, ano, renavam, chassi))
                 conn.commit()
+                self.enviar_mensagem(placa, cor, modelo, ano, renavam, chassi)
                 return True
         except psycopg2.Error as e:
             print(f"Ocorreu um erro ao acessar o banco de dados: {e}")
             return False
 
+    def enviar_mensagem(self, placa, cor, modelo, ano, renavam, chassi):
+        mensagem = f"{placa};{cor};{modelo};{ano};{renavam};{chassi}"
+        try:
+            connection = pika.BlockingConnection(pika.ConnectionParameters(**self.rabbitmq_config))
+            channel = connection.channel()
+            channel.basic_publish(exchange='', routing_key='fila_veiculos', body=mensagem)
+            print(f'Mensagem enviada: {mensagem}')
+            connection.close()
+        except pika.exceptions.AMQPError as amqp_error:
+            print(f"Erro no RabbitMQ ao enviar mensagem: {amqp_error}")
+
 class CartaoModel:
     """ Classe referente ao modelo cartão """
-    def __init__(self, database_config, rabbitmq_config):
+    def _init_(self, database_config, rabbitmq_config):
         self.database_config = database_config
         self.rabbitmq_config = rabbitmq_config
 
@@ -108,7 +118,7 @@ class CartaoModel:
 
 class PassageiroModel:
     """ Classe referente ao modelo Passageiro """
-    def __init__(self, database_config):
+    def _init_(self, database_config):
         self.database_config = database_config
 
     def conectar_banco(self):
@@ -168,7 +178,7 @@ class PassageiroModel:
 
 class MototaxiModel:
     """ Classe responsável pelo modelo do entregador """
-    def __init__(self, database_config):
+    def _init_(self, database_config):
         self.database_config = database_config
 
     def conectar_banco(self):
@@ -228,7 +238,7 @@ class MototaxiModel:
 
 class UsuarioModel:
     """ Classe referente ao modelo usuario """
-    def __init__(self, database_config):
+    def _init_(self, database_config):
         self.database_config = database_config
 
     def fazer_login(self, email, senha):
