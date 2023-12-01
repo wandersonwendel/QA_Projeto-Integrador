@@ -1,8 +1,9 @@
+# Importações
 import pika
 from Model.models import VeiculoModel, CartaoModel, PassageiroModel, MototaxiModel, UsuarioModel
 from View.views import PassageiroView, CartaoView, MototaxiView, UsuarioView
 from Controller.controllers import VeiculoController, CartaoController, \
-    PassageiroController,MototaxiController, UsuarioController
+    PassageiroController, MototaxiController, UsuarioController
 
 # Configurações do banco de dados
 database_config = {
@@ -42,10 +43,14 @@ usuario_controller = UsuarioController(usuario_model, usuario_view)
 # Testar algumas funcionalidades
 veiculo_controller.cadastrar_veiculo('abc099', 'preto', 'Fiesta', 2022, 'ABC1234', '000000')
 
+# Considere passar a senha como um parâmetro ou gerar dinamicamente
 passageiro_controller.cadastrar_passageiro('wan', 'wandd@gmail.com', '93829472', 'jsfdsfg', 'masc', 'dhsjffg')
 
+# Considere gerar valores dinâmicos ou utilizar IDs existentes no sistema
 mototaxi_controller.cadastrar_mototaxi('wan', 'wandd@gmail.com', '93829472', 'masc', '48385685', '4748566', '921382', True, 5.6487, 10.3535)
 
-usuario_controller.realizar_login('wand@gmail.com', 'jsfdsfg')
+# Corrija o email no teste de login
+usuario_controller.realizar_login('wandd@gmail.com', 'jsfdsfg')
 
+# Considere gerar valores dinâmicos ou utilizar IDs existentes no sistema
 cartao_controller.cadastrar_cartao(1, 'Wan W S Lopes', '321', '2030', 'débito', '927497233')
