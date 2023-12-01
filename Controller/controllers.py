@@ -1,39 +1,36 @@
-""" Módulo pika é responsável por fazer a conexão entre rabbitMQ e o servidor """
 import pika
 
 class VeiculoController:
-    """ Classe responsável pelo modelo Veículo """
-    def __init__(self, model):
+    """Classe responsável pelo modelo Veículo."""
+    def _init_(self, model):
         self.model = model
 
     def cadastrar_veiculo(self, placa, cor, modelo, ano, renavam, chassi):
-        """ Método responsável por fazer a inserção do veiculo no banco de dados """
+        """Método responsável por fazer a inserção do veiculo no banco de dados."""
         sucesso = self.model.cadastrar_veiculo(placa, cor, modelo, ano, renavam, chassi)
         if sucesso:
             self.enviar_mensagem(placa, cor, modelo, ano, renavam, chassi)
 
     def enviar_mensagem(self, placa, cor, modelo, ano, renavam, chassi):
-        """ Método responsável por enviar mensagem para o rabbitMQ """
+        """Método responsável por enviar mensagem para o rabbitMQ."""
         mensagem = f"{placa};{cor};{modelo};{ano};{renavam};{chassi}"
         try:
-            connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost',
-            port=5672))
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5672))
             channel = connection.channel()
             channel.basic_publish(exchange='', routing_key='fila_veiculos', body=mensagem)
             print(f'Mensagem enviada: {mensagem}')
             connection.close()
         except pika.exceptions.AMQPError as amqp_error:
-            # Lidar com erros específicos do RabbitMQ
             print(f"Erro no RabbitMQ ao enviar mensagem: {amqp_error}")
 
 class CartaoController:
-    """ Classe responsável pelo controle do Cartão """
-    def __init__(self, model, view):
+    """Classe responsável pelo controle do Cartão."""
+    def _init_(self, model, view):
         self.model = model
         self.view = view
 
     def cadastrar_cartao(self, passageiro_id, titular, cvv, validade, tipo, numero):
-        """ Método responsável por inserir o cartão no banco de dados """
+        """Método responsável por inserir o cartão no banco de dados."""
         if self.model.cadastrar_cartao(passageiro_id, titular, cvv, validade, tipo, numero):
             self.view.mostrar_mensagem("Cartão cadastrado com sucesso!")
             self.model.enviar_resposta_para_passageiro(passageiro_id, "RESPOSTA_CADASTRO_CARTAO; SUCESSO")
@@ -42,8 +39,8 @@ class CartaoController:
             self.model.enviar_resposta_para_passageiro(passageiro_id, "RESPOSTA_CADASTRO_CARTAO; ERRO")
 
     def desvincular_cartao(self, passageiro_id, titular, numero):
-        """ Método responsável por desvincular o cartão no banco de dados """
-        if self.model.desvincular_cartao(passageiro_id, titular,numero):
+        """Método responsável por desvincular o cartão no banco de dados."""
+        if self.model.desvincular_cartao(passageiro_id, titular, numero):
             self.view.mostrar_mensagem("Cartão desvinculado com sucesso!")
             self.model.enviar_resposta_para_passageiro(passageiro_id, "RESPOSTA_DESVINCULAR_CARTAO; SUCESSO")
         else:
@@ -52,7 +49,7 @@ class CartaoController:
 
 class PassageiroController:
     """ Método responsável pelo controle do cliente """
-    def __init__(self, model, view):
+    def _init_(self, model, view):
         self.model = model
         self.view = view
 
@@ -71,7 +68,7 @@ class PassageiroController:
 
 class MototaxiController:
     """ Classe responsável pelo controle do Entregador """
-    def __init__(self, model, view):
+    def _init_(self, model, view):
         self.model = model
         self.view = view
 
@@ -89,7 +86,7 @@ class MototaxiController:
 
 class UsuarioController:
     """ Classe responsável pelo controle do usuario """
-    def __init__(self, model, view):
+    def _init_(self, model, view):
         self.model = model
         self.view = view
 
